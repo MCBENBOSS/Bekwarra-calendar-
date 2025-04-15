@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6c5ce7">
+  <title>My Traditional Calendar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fefefe;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #2c3e50;
+    }
+
+    .print-btn {
+      display: block;
+      margin: 0 auto 30px;
+      padding: 10px 20px;
+      background: #0984e3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      background: #6c5ce7;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #eee;
+      padding: 14px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background: #dff9fb;
+      color: #130f40;
+    }
+
+    td {
+      background: #f7f9fa;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f0f4f8;
+    }
+
+    @media print {
+      .print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Bekwarra Calendar
+MC BEN </h1>
+  <button class="print-btn" onclick="window.print()">Print Calendar</button>
+
+  <div id="calendar"></div>
+
+  <script>
+    const months = [
+      { name: 'January', days: 31 },
+      { name: 'February', days: 28 },
+      { name: 'March', days: 31 },
+      { name: 'April', days: 30 },
+      { name: 'May', days: 31 },
+      { name: 'June', days: 30 },
+      { name: 'July', days: 31 },
+      { name: 'August', days: 31 },
+      { name: 'September', days: 30 },
+      { name: 'October', days: 31 },
+      { name: 'November', days: 30 },
+      { name: 'December', days: 31 }
+    ];
+
+    const weekdays = ['Uchaga', 'Ugidi', 'Achanya', 'Udama', 'Ugbada'];
+    let startIndex = 0;
+
+    months.forEach(month => {
+      document.write(`<h2>${month.name} - Starts on: ${weekdays[startIndex]}</h2>`);
+      document.write('<table><tr>');
+      weekdays.forEach(day => document.write(`<th>${day}</th>`));
+      document.write('</tr>');
+
+      let day = 1;
+      while (day <= month.days) {
+        document.write('<tr>');
+        for (let i = 0; i < 5; i++) {
+          if ((day === 1 && i < startIndex) || day > month.days) {
+            document.write('<td></td>');
+          } else {
+            document.write(`<td>${day}</td>`);
+            day++;
+          }
+        }
+        document.write('</tr>');
+      }
+
+      startIndex = (startIndex + month.days) % 5;
+      document.write('</table>');
+    });
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Traditional Calendar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fefefe;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #2c3e50;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .tabs button {
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    .tabs button:hover, .tabs button.active {
+      background: #4834d4;
+    }
+
+    .month {
+      display: none;
+    }
+
+    .month.active {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    table {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      border-collapse: collapse;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #eee;
+      padding: 14px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background: #dff9fb;
+      color: #130f40;
+    }
+
+    td {
+      background: #f7f9fa;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f0f4f8;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Traditional Calendar</h1>
+  <div class="tabs" id="monthTabs"></div>
+  <div id="calendarContainer"></div>
+
+  <script>
+    const months = [
+      { name: 'Jenwari', days: 31 },
+      { name: 'Febwari', days: 28 },
+      { name: 'Mach', days: 31 },
+      { name: 'Eprel', days: 30 },
+      { name: 'Mee', days: 31 },
+      { name: 'Juun', days: 30 },
+      { name: 'Julae', days: 31 },
+      { name: 'Ogost', days: 31 },
+      { name: 'Septemba', days: 30 },
+      { name: 'Oktoba', days: 31 },
+      { name: 'Novemba', days: 30 },
+      { name: 'Disemba', days: 31 }
+    ];
+
+    const weekdays = ['Uchaga', 'Ugidi', 'Achanya', 'Udama', 'Ugbada'];
+    let startIndex = 0;
+
+    const tabsContainer = document.getElementById('monthTabs');
+    const calendarContainer = document.getElementById('calendarContainer');
+
+    months.forEach((month, i) => {
+      // Create button tab
+      const btn = document.createElement('button');
+      btn.innerText = month.name;
+      btn.onclick = () => showMonth(i);
+      tabsContainer.appendChild(btn);
+
+      // Create month calendar
+      let html = `<div class="month" id="month-${i}">`;
+      html += `<h2>${month.name} - Starts on: ${weekdays[startIndex]}</h2>`;
+      html += '<table><tr>';
+      weekdays.forEach(day => html += `<th>${day}</th>`);
+      html += '</tr>';
+
+      let day = 1;
+      while (day <= month.days) {
+        html += '<tr>';
+        for (let j = 0; j < 5; j++) {
+          if ((day === 1 && j < startIndex) || day > month.days) {
+            html += '<td></td>';
+          } else {
+            html += `<td>${day}</td>`;
+            day++;
+          }
+        }
+        html += '</tr>';
+      }
+
+      html += '</table></div>';
+      calendarContainer.innerHTML += html;
+
+      startIndex = (startIndex + month.days) % 5;
+    });
+
+    function showMonth(index) {
+      document.querySelectorAll('.month').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`month-${index}`).classList.add('active');
+      document.querySelectorAll('.tabs button')[index].classList.add('active');
+    }
+
+    // Show first month by default
+    showMonth(0);
+  </script>
+
+</body>
+</html>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker registered"))
+      .catch(error => console.log("Service Worker registration failed:", error));
+  }
+</script>
