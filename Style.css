@@ -1,0 +1,12 @@
+if ((day === 1 && j < startIndex) || day > month.days) {
+  html += '<td></td>';
+} else {
+  const today = new Date();
+  const isToday =
+    today.getDate() === day &&
+    today.getMonth() === i;
+
+  const className = isToday ? 'today' : '';
+  html += `<td class="${className}">${day}</td>`;
+  day++;
+}
