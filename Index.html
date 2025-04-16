@@ -1,140 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#6c5ce7">
-  <title>My Traditional Calendar</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #fefefe;
-      color: #333;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 32px;
-      color: #2c3e50;
-    }
-
-    .print-btn {
-      display: block;
-      margin: 0 auto 30px;
-      padding: 10px 20px;
-      background: #0984e3;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    h2 {
-      margin-top: 40px;
-      background: #6c5ce7;
-      color: white;
-      padding: 12px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    table {
-      width: 100%;
-      max-width: 600px;
-      margin: 20px auto;
-      border-collapse: collapse;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      background: #ffffff;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    th, td {
-      border: 1px solid #eee;
-      padding: 14px;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    th {
-      background: #dff9fb;
-      color: #130f40;
-    }
-
-    td {
-      background: #f7f9fa;
-    }
-
-    tr:nth-child(even) td {
-      background-color: #f0f4f8;
-    }
-
-    @media print {
-      .print-btn {
-        display: none;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Bekwarra Calendar
-MC BEN </h1>
-  <button class="print-btn" onclick="window.print()">Print Calendar</button>
-
-  <div id="calendar"></div>
-
-  <script>
-    const months = [
-      { name: 'January', days: 31 },
-      { name: 'February', days: 28 },
-      { name: 'March', days: 31 },
-      { name: 'April', days: 30 },
-      { name: 'May', days: 31 },
-      { name: 'June', days: 30 },
-      { name: 'July', days: 31 },
-      { name: 'August', days: 31 },
-      { name: 'September', days: 30 },
-      { name: 'October', days: 31 },
-      { name: 'November', days: 30 },
-      { name: 'December', days: 31 }
-    ];
-
-    const weekdays = ['Uchaga', 'Ugidi', 'Achanya', 'Udama', 'Ugbada'];
-    let startIndex = 0;
-
-    months.forEach(month => {
-      document.write(`<h2>${month.name} - Starts on: ${weekdays[startIndex]}</h2>`);
-      document.write('<table><tr>');
-      weekdays.forEach(day => document.write(`<th>${day}</th>`));
-      document.write('</tr>');
-
-      let day = 1;
-      while (day <= month.days) {
-        document.write('<tr>');
-        for (let i = 0; i < 5; i++) {
-          if ((day === 1 && i < startIndex) || day > month.days) {
-            document.write('<td></td>');
-          } else {
-            document.write(`<td>${day}</td>`);
-            day++;
-          }
-        }
-        document.write('</tr>');
-      }
-
-      startIndex = (startIndex + month.days) % 5;
-      document.write('</table>');
-    });
-  </script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6c5ce7">
   <title>My Traditional Calendar</title>
+  <link rel="manifest" href="manifest.json" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -158,18 +29,21 @@ MC BEN </h1>
       margin-bottom: 30px;
     }
 
-    .tabs button {
+    .tabs button,
+    .print-btn {
       background: #6c5ce7;
       color: white;
       border: none;
       padding: 10px 15px;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
       transition: background 0.3s;
     }
 
-    .tabs button:hover, .tabs button.active {
+    .tabs button:hover,
+    .tabs button.active,
+    .print-btn:hover {
       background: #4834d4;
     }
 
@@ -217,13 +91,27 @@ MC BEN </h1>
     tr:nth-child(even) td {
       background-color: #f0f4f8;
     }
+
+    @media print {
+      .tabs, .print-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>My Traditional Calendar</h1>
+  <h1>Bekwarra Traditional Calendar - MC BEN</h1>
+
   <div class="tabs" id="monthTabs"></div>
+
   <div id="calendarContainer"></div>
+
+  <<div style="text-align:center;">
+  <button class="print-btn" onclick="window.print()">Print Calendar</button>
+  <button class="print-btn" onclick="downloadCurrentMonthAsPDF()">Download PDF</button>
+</div>
+  </div>
 
   <script>
     const months = [
@@ -231,7 +119,7 @@ MC BEN </h1>
       { name: 'Febwari', days: 28 },
       { name: 'Mach', days: 31 },
       { name: 'Eprel', days: 30 },
-      { name: 'Mee', days: 31 },
+      { name: 'May', days: 31 },
       { name: 'Juun', days: 30 },
       { name: 'Julae', days: 31 },
       { name: 'Ogost', days: 31 },
@@ -248,13 +136,13 @@ MC BEN </h1>
     const calendarContainer = document.getElementById('calendarContainer');
 
     months.forEach((month, i) => {
-      // Create button tab
+      // Tab button
       const btn = document.createElement('button');
       btn.innerText = month.name;
       btn.onclick = () => showMonth(i);
       tabsContainer.appendChild(btn);
 
-      // Create month calendar
+      // Month calendar
       let html = `<div class="month" id="month-${i}">`;
       html += `<h2>${month.name} - Starts on: ${weekdays[startIndex]}</h2>`;
       html += '<table><tr>';
@@ -288,16 +176,52 @@ MC BEN </h1>
       document.querySelectorAll('.tabs button')[index].classList.add('active');
     }
 
-    // Show first month by default
-    showMonth(0);
+    showMonth(0); // Show first month by default
+  </script>
+
+  <script>
+    function downloadCurrentMonth() {
+      const activeMonth = document.querySelector('.month.active');
+      if (!activeMonth) return;
+
+      const monthName = activeMonth.querySelector('h2').innerText.split(' - ')[0];
+      const htmlContent = `
+        <html>
+          <head>
+            <title>${monthName} Calendar</title>
+            <style>
+              body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
+              h2 { text-align: center; margin-bottom: 20px; }
+              table { width: 100%; border-collapse: collapse; }
+              th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+              th { background: #dff9fb; }
+              td { background: #f7f9fa; }
+            </style>
+          </head>
+          <body>
+            
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    function downloadCurrentMonthAsPDF() {
+      const activeMonth = document.querySelector('.month.active');
+      if (!activeMonth) return;
+
+      const monthName = activeMonth.querySelector('h2').innerText.split(' - ')[0];
+      const opt = {
+        margin: 0.5,
+        filename: `${monthName}_Calendar.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().from(activeMonth).set(opt).save();
+    }
+  </script>
+    }
   </script>
 
 </body>
 </html>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(() => console.log("Service Worker registered"))
-      .catch(error => console.log("Service Worker registration failed:", error));
-  }
-</script>
