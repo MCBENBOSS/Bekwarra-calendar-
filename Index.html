@@ -1,50 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#6c5ce7">
-  <title>My Traditional Calendar</title>
-  <link rel="manifest" href="manifest.json" />
+<head><link rel="manifest" href="manifest.json" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traditional Calendar</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #fefefe;
-      color: #333;
+      font-family: Arial, sans-serif;
       padding: 20px;
+      background-color: #f9f9f9;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 32px;
-      color: #2c3e50;
     }
 
     .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 30px;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    .tabs button,
-    .print-btn {
-      background: #6c5ce7;
-      color: white;
-      border: none;
+    .tabs button {
+      margin: 5px;
       padding: 10px 15px;
-      border-radius: 6px;
+      border: none;
+      background-color: #3498db;
+      color: white;
       cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s;
+      border-radius: 5px;
     }
 
-    .tabs button:hover,
-    .tabs button.active,
-    .print-btn:hover {
-      background: #4834d4;
+    .tabs button.active {
+      background-color: #2ecc71;
     }
 
     .month {
@@ -53,43 +40,33 @@
 
     .month.active {
       display: block;
-      animation: fadeIn 0.4s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     table {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 40px;
+      margin: 0 auto;
       border-collapse: collapse;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      background: #ffffff;
-      border-radius: 12px;
-      overflow: hidden;
+      width: 90%;
     }
 
     th, td {
-      border: 1px solid #eee;
-      padding: 14px;
+      border: 1px solid #ccc;
+      padding: 10px;
       text-align: center;
-      font-size: 16px;
     }
 
     th {
-      background: #dff9fb;
-      color: #130f40;
+      background-color: #eee;
     }
 
-    td {
-      background: #f7f9fa;
-    }
-
-    tr:nth-child(even) td {
-      background-color: #f0f4f8;
+    .print-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     @media print {
@@ -101,16 +78,14 @@
 </head>
 <body>
 
-  <h1>Bekwarra Traditional Calendar - MC BEN</h1>
+  <h1>Bekwarra Traditional Calendar</h1>
 
   <div class="tabs" id="monthTabs"></div>
 
   <div id="calendarContainer"></div>
 
-  <<div style="text-align:center;">
-  <button class="print-btn" onclick="window.print()">Print Calendar</button>
-  <button class="print-btn" onclick="downloadCurrentMonthAsPDF()">Download PDF</button>
-</div>
+  <div style="text-align:center;">
+    <button class="print-btn" onclick="window.print()">Print</button>
   </div>
 
   <script>
@@ -132,21 +107,21 @@
     const weekdays = ['Uchaga', 'Ugidi', 'Achanya', 'Udama', 'Ugbada'];
     let startIndex = 0;
 
-    const tabsContainer = document.getElementById('monthTabs');
-    const calendarContainer = document.getElementById('calendarContainer');
+    const tabs = document.getElementById('monthTabs');
+    const container = document.getElementById('calendarContainer');
 
     months.forEach((month, i) => {
-      // Tab button
-      const btn = document.createElement('button');
-      btn.innerText = month.name;
-      btn.onclick = () => showMonth(i);
-      tabsContainer.appendChild(btn);
+      const button = document.createElement('button');
+      button.textContent = month.name;
+      button.onclick = () => showMonth(i);
+      tabs.appendChild(button);
 
-      // Month calendar
       let html = `<div class="month" id="month-${i}">`;
-      html += `<h2>${month.name} - Starts on: ${weekdays[startIndex]}</h2>`;
+      html += `<h2 style="text-align:center;">${month.name}</h2>`;
       html += '<table><tr>';
-      weekdays.forEach(day => html += `<th>${day}</th>`);
+      weekdays.forEach(day => {
+        html += `<th>${day}</th>`;
+      });
       html += '</tr>';
 
       let day = 1;
@@ -164,7 +139,7 @@
       }
 
       html += '</table></div>';
-      calendarContainer.innerHTML += html;
+      container.innerHTML += html;
 
       startIndex = (startIndex + month.days) % 5;
     });
@@ -172,56 +147,12 @@
     function showMonth(index) {
       document.querySelectorAll('.month').forEach(div => div.classList.remove('active'));
       document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+
       document.getElementById(`month-${index}`).classList.add('active');
       document.querySelectorAll('.tabs button')[index].classList.add('active');
     }
 
-    showMonth(0); // Show first month by default
-  </script>
-
-  <script>
-    function downloadCurrentMonth() {
-      const activeMonth = document.querySelector('.month.active');
-      if (!activeMonth) return;
-
-      const monthName = activeMonth.querySelector('h2').innerText.split(' - ')[0];
-      const htmlContent = `
-        <html>
-          <head>
-            <title>${monthName} Calendar</title>
-            <style>
-              body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
-              h2 { text-align: center; margin-bottom: 20px; }
-              table { width: 100%; border-collapse: collapse; }
-              th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-              th { background: #dff9fb; }
-              td { background: #f7f9fa; }
-            </style>
-          </head>
-          <body>
-            
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script>
-    function downloadCurrentMonthAsPDF() {
-      const activeMonth = document.querySelector('.month.active');
-      if (!activeMonth) return;
-
-      const monthName = activeMonth.querySelector('h2').innerText.split(' - ')[0];
-      const opt = {
-        margin: 0.5,
-        filename: `${monthName}_Calendar.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      html2pdf().from(activeMonth).set(opt).save();
-    }
-  </script>
-    }
+    showMonth(0); // Show first month
   </script>
 
 </body>
-</html>
