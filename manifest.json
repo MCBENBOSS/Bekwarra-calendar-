@@ -1,7 +1,7 @@
 {
-  "name": "Traditional Calendar",
-  "short_name": "Calendar",
-  "start_url": ".",
+  "name": "Bekwarra Calendar",
+  "short_name": "BekwarraCal",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#6c5ce7",
